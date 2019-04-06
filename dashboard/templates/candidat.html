@@ -1,0 +1,115 @@
+{% extends "blank.html" %}
+
+{% block sidebar %}
+
+
+    <li class="mt">
+        <a href="#">
+            <i class="fa fa-home"></i>
+            <span>Accueil</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-file-text"></i>
+            <span>Curriculum Vitae</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-exchange"></i>
+            <span>Postulation</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-envelope-o"></i>
+            <span>Messages</span>
+        </a>
+        <!-- <ul class="sub">
+            <li><a  href="basic_table.html">Basic Table</a></li>
+            <li><a  href="responsive_table.html">Responsive Table</a></li>
+        </ul> -->
+    </li>
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class=" fa fa-bar-chart-o"></i>
+            <span>Statistiques</span>
+        </a>
+        <!-- <ul class="sub">
+            <li><a  href="morris.html">Morris</a></li>
+            <li><a  href="chartjs.html">Chartjs</a></li>
+        </ul> -->
+    </li>
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-9 main-chart">
+            <div class="row mtbox">
+                {% for offre in offres %}
+                <div class="col-md-4 col-sm-4 mb">
+                    <div class="white-panel pn donut-chart card">
+                        <div class="white-header">
+                            <h5>{{offre.intutile|upper}}</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 goleft">
+                                <p>
+                                    <h5><i class="fa fa-list-alt"></i> Description</h5>
+                                    {{offre.description|truncatechars:100}}
+                                </p>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 goleft">
+                                <p>
+                                    <h5><i class="fa fa-th-list"></i> Mission</h5>
+                                    {{offre.description|truncatechars:100}}
+                                </p>
+                            </div>
+                            <a href="#" class="pull-right">
+                                <i class="fa fa-plus-square-o"></i>
+                                Voir plus</a>                                
+                        </div>
+                        <!-- <br> -->
+                    </div>
+                </div>
+                {% endfor %}                
+
+            </div><!-- /row -->
+
+        </div>
+        <div class="col-lg-3 ds">
+            <h3>CATEGORIES</h3>
+            
+            <ul class="list-group">
+                {% for categorie in categories %}
+                <li class="list-group-item"><a href="#">{{categorie.denomination}}</a></li>
+                {% endfor %}
+            </ul>
+        
+            <h3>DERNIERES ANNONCES</h3>
+            <!-- First Member -->
+            <div class="desc">
+                <div class="thumb">
+                    <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
+                </div>
+                <div class="details">
+                    <p><a href="#">DIVYA MANIAN</a><br/>
+                        <muted>Available</muted>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
