@@ -1,1 +1,119 @@
 {% extends "blank.html" %}
+
+{% block title %}Recruteur{% endblock %}
+
+{% block css %}
+{% load static %}
+<link href="{% static 'assets/css/recruteur.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/bootstrap-datetimepicker.css' %}" rel="stylesheet">
+<script src="{% static 'assets/script/bootstrap-datetimepicker.js' %}"></script>
+{% endblock %}
+
+{% block sidebar %}
+
+
+    <li class="mt">
+        <a href="#">
+            <i class="fa fa-home"></i>
+            <span>Accueil</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-file-text"></i>
+            <span>Annonces</span>
+        </a>
+        <ul class="sub">
+            <li><a  href="#">
+                <i class="fa fa-plus"></i>
+                <span>Nouvelle annonce</span>
+                </a>
+            </li>
+            <li><a  href="#">
+                <i class="fa fa-list"></i>
+                <span>Liste</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class="fa fa-envelope-o"></i>
+            <span>Messages</span>
+        </a>
+        <!-- <ul class="sub">
+            <li><a  href="basic_table.html">Basic Table</a></li>
+            <li><a  href="responsive_table.html">Responsive Table</a></li>
+        </ul> -->
+    </li>
+    <li class="sub-menu">
+        <a href="javascript:;" >
+            <i class=" fa fa-bar-chart-o"></i>
+            <span>Statistiques</span>
+        </a>
+        <!-- <ul class="sub">
+            <li><a  href="morris.html">Morris</a></li>
+            <li><a  href="chartjs.html">Chartjs</a></li>
+        </ul> -->
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-9 main-chart">
+            <!-- <div class="row mtbox"> -->
+                <form method="POST" class="offre-form">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                    <button type="submit" class="btn btn-sm btn-save pull-right">Enregistrer</button>
+                </form>
+            <!-- </div> -->
+
+        </div>
+        <div class="col-lg-3 ds">
+            <h3>CATEGORIES</h3>
+            
+            <ul class="list-group">
+                {% for categorie in categories %}
+                <li class="list-group-item"><a href="#">{{categorie.denomination}}</a></li>
+                {% endfor %}
+            </ul>
+        
+            <h3>DERNIERES ANNONCES</h3>
+            <!-- First Member -->
+            <div class="desc">
+                <div class="thumb">
+                    <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
+                </div>
+                <div class="details">
+                    <p><a href="#">DIVYA MANIAN</a><br/>
+                        <muted>Available</muted>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                // format: 'DD.MM.YYYY' /*remove this line if you want to use time as well */
+            });
+           
+        });
+    </script>
+
+{% endblock %}
