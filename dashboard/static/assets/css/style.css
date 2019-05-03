@@ -833,7 +833,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 /* LINE ICONS CONFIGURATION */
 
 .mtbox {
-	margin-top: 80px;
+    /*margin-top: 80px;  */
+    /* NOVAIKO */
+    margin-top: 30px; 
 	margin-bottom: 40px;
 }
 
@@ -874,7 +876,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 /* MAIN CHART CONFIGURATION */
 .main-chart {
-	padding-top: 20px;
+    padding-top: 20px;
 }
 
 .mleft {
@@ -1080,8 +1082,9 @@ PANELS CONFIGURATIONS
 /*White Panel */
 .white-panel {
 	text-align: center;
-	background: #ffffff;
-	color: #ccd1d9;
+    background: #ffffff;
+    /* NOVAIKO */
+	/*color: #ccd1d9;*/
 }
 
 .white-panel p {
@@ -1092,8 +1095,10 @@ PANELS CONFIGURATIONS
 .white-panel .white-header {
 	background: #f4f4f4;
 	padding: 3px;
-	margin-bottom: 15px;
-	color: #c6c6c6;
+    margin-bottom: 15px;
+    color: #424a5d
+    /* NOVAIKO */
+	/*color: #c6c6c6;*/
 }
 .white-panel .small {
 	font-size: 10px;

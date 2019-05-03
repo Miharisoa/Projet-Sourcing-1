@@ -1,5 +1,10 @@
 {% extends "blank.html" %}
 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/candidat.css' %}">
+
+
 {% block sidebar %}
 
 
@@ -56,24 +61,25 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-9 main-chart">
+            <h3>Les offres correspondants</h3>
             <div class="row mtbox">
-                {% for offre in offres %}
+                {% for element in offres %}
                 <div class="col-md-4 col-sm-4 mb">
                     <div class="white-panel pn donut-chart card">
                         <div class="white-header">
-                            <h5>{{offre.intutile|upper}}</h5>
+                            <h5>{{element.offre.intutile|upper}}</h5>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 col-xs-12 goleft">
                                 <p>
                                     <h5><i class="fa fa-list-alt"></i> Description</h5>
-                                    {{offre.description|truncatechars:100}}
+                                    {{element.offre.description|truncatechars:100}}
                                 </p>
                             </div>
                             <div class="col-sm-12 col-xs-12 goleft">
                                 <p>
                                     <h5><i class="fa fa-th-list"></i> Mission</h5>
-                                    {{offre.description|truncatechars:100}}
+                                    {{element.offre.mission|truncatechars:100}}
                                 </p>
                             </div>
                             <a href="#" class="pull-right">
@@ -100,14 +106,14 @@
             <h3>DERNIERES ANNONCES</h3>
             <!-- First Member -->
             <div class="desc">
-                <div class="thumb">
+                <!--<div class="thumb">
                     <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
                 </div>
                 <div class="details">
                     <p><a href="#">DIVYA MANIAN</a><br/>
                         <muted>Available</muted>
                     </p>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

@@ -26,7 +26,6 @@ def create_new_account(request):
         rec = Recruteur(
             nom = nom,
             prenom = prenom,
-            #password = password,
             password = make_password(password),
             mail = mail
         )
