@@ -1,0 +1,12 @@
+form[class='offre-form']{
+    margin-left:10%;
+    width:80%;
+    padding:25px 20px 50px 20px;
+    box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 1%;
+}
+
+.btn-save{
+    background: rgb(0, 174, 255);
+    color:white;
+}

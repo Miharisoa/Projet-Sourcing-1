@@ -1,13 +1,15 @@
 from django.shortcuts import render,get_object_or_404
 from myapp.models import Candidat,Recruteur
 from .models import Categorie, Offre
+from .forms import OffreForm
 
 
 def get_dashboard_recruteur(request):
     id = request.session['id_user']
     user = get_object_or_404(Recruteur,id=id)
     print(user.nom)
-    return render(request,'recruteur.html')
+    form = OffreForm()     
+    return render(request,'recruteur.html',{'form': form})
 
 
 def get_dashboard_candidat(request):
