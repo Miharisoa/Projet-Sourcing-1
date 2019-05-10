@@ -10,7 +10,7 @@ app.config(function ($interpolateProvider) {
 app.controller('candidatCtrl',function($scope,$http){
 
     $scope.showListe=1;
-    // $scope.page = 2;
+    $scope.page = 1;
     $scope.offres = [];
     $scope.currentElem = null;
 

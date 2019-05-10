@@ -7,6 +7,7 @@ from datetime import datetime
 from django.db.models import Subquery,OuterRef
 
 from .forms import OffreForm
+from myapp.forms import CandidatForm
 
 def get_dashboard_recruteur(request):
     id = request.session['id_user']
@@ -43,11 +44,12 @@ def get_dashboard_candidat(request):
         objet = {'offre':item.offre,'societe':item.societe}
         # liste.append(item.offre)        
         liste.append(objet)
-        
+    form = CandidatForm()
     context ={
         'categories' : categories,
         'offres':offres,
         'user':user,
+        'form_profil':form,
         'liste':json.dumps(liste, default=lambda o: o.__dict__),
     }
     return render(request,'candidat.html', context)

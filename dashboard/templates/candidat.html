@@ -18,7 +18,7 @@
     </li>
 
     <li class="sub-menu">
-        <a href="javascript:;" >
+        <a href="#" onclick="changer_menu(2);">
             <i class="fa fa-user"></i>
             <span>Profil</span>
         </a>
@@ -63,39 +63,39 @@
 {% block content %}
     <div class="row" ng-controller="candidatCtrl" ng-init="init('{{liste|escapejs}}');">
         <div class="col-lg-9 main-chart">
-            <div  ng-show="showListe==1 && page==1">                
-            <h3>Les offres correspondants</h3>
-            <div class="row mtbox">                
-                <div class="col-md-4 col-sm-4 mb" ng-repeat="element in offres">
-                    <!-- [[offres]] -->
-                    
-                    <div class="white-panel pn donut-chart card">
-                        <div class="white-header">                                               
-                            <h5>[[element.offre.intutile|uppercase]]</h5>                            
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-xs-12 goleft">
-                                <p>
-                                    <h5><i class="fa fa-list-alt"></i> Description</h5>                                    
-                                    [[element.offre.description|limitTo:100]]
-                                </p>
+            <div  ng-show="showListe==1 && page==1">  <!-- debut listing offres -->       
+                <h3>Les offres correspondants</h3>
+                <div class="row mtbox">                
+                    <div class="col-md-4 col-sm-4 mb" ng-repeat="element in offres">
+                        <!-- [[offres]] -->
+                        
+                        <div class="white-panel pn donut-chart card">
+                            <div class="white-header">                                               
+                                <h5>[[element.offre.intutile|uppercase]]</h5>                            
                             </div>
-                            <div class="col-sm-12 col-xs-12 goleft">
-                                <p>
-                                    <h5><i class="fa fa-th-list"></i> Mission</h5>                                    
-                                    [[element.offre.mission|limitTo:100]]
-                                </p>
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12 goleft">
+                                    <p>
+                                        <h5><i class="fa fa-list-alt"></i> Description</h5>                                    
+                                        [[element.offre.description|limitTo:100]]
+                                    </p>
+                                </div>
+                                <div class="col-sm-12 col-xs-12 goleft">
+                                    <p>
+                                        <h5><i class="fa fa-th-list"></i> Mission</h5>                                    
+                                        [[element.offre.mission|limitTo:100]]
+                                    </p>
+                                </div>
+                                <a href="#" class="pull-right" ng-click="voirPlus($index);">
+                                    <i class="fa fa-plus-square-o"></i>
+                                    Voir plus
+                                </a>                                
                             </div>
-                            <a href="#" class="pull-right" ng-click="voirPlus($index);">
-                                <i class="fa fa-plus-square-o"></i>
-                                Voir plus
-                            </a>                                
+                            <!-- <br> -->
                         </div>
-                        <!-- <br> -->
-                    </div>
-                </div>                
+                    </div>                
 
-            </div><!-- /row -->
+                </div><!-- /row mtbox-->
             </div> <!-- FIN LISTING -->
 
             <!-- debut DIV Voir plus -->
@@ -142,6 +142,10 @@
                 </div>
             </div>
             <!-- fin DIV Voir plus -->
+
+            <div ng-show="page==2">
+                {{form_profil.as_p}}
+            </div>
 
         </div>
         <div class="col-lg-3 ds">
