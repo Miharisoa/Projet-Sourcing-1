@@ -8,6 +8,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
+    <!-- <title>Accueil</title> -->
     <title>Sourcing | {% block title %}{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
@@ -18,13 +19,14 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/style-responsive.css' %}" rel="stylesheet">
+    
     <script src="{% static 'assets/js/jquery.js' %}"></script>
-
+    
     {% block css %}
     {% endblock %}
   </head>
 
-  <body>
+  <body ng-app="dashboardApp">
 
   <section id="container" >
       <!-- **********************************************************************************************************************************************************
@@ -44,16 +46,16 @@
                     <li class="dropdown" style="margin-top:15px;">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="fa fa-tasks"></i>
-                            <span class="badge bg-theme" style="position:absolute;top:-10px;left:-10px;background: red;">4</span>
+                            <span class="badge bg-theme" style="position:absolute;top:-10px;left:-10px;background: red;"></span>
                         </a>
                     </li>
                     <li class="dropdown" style="margin-top:15px;">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="badge bg-theme" style="position:absolute;top:-10px;left:-10px;background: red;">4</span>
+                            <span class="badge bg-theme" style="position:absolute;top:-10px;left:-10px;background: red;"></span>
                         </a>
                     </li>
-                    <li><a class="logout" href="/">Logout</a></li>
+                    <li><a class="logout" href="/">Déconnexion</a></li>
             	</ul>
             </div>
         </header>
@@ -107,7 +109,7 @@
   </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
-    
+    <!-- <script src="{% static 'assets/js/jquery.js' %}"></script> -->
     <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery-ui-1.9.2.custom.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery.ui.touch-punch.min.js' %}"></script>
@@ -118,7 +120,9 @@
 
     <!--common script for all pages-->
     <script src="{% static 'assets/js/common-scripts.js' %}"></script>
-
+    
+    <script src="{% static 'js/angular.js' %}"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
     <!--script for this page-->
     
   <script>
@@ -129,6 +133,10 @@
       });
 
   </script>
+
+  {% block js %}
+
+  {% endblock %}
 
   </body>
 </html>

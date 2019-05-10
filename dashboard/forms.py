@@ -12,14 +12,7 @@ class OffreForm(forms.ModelForm):
             'mission': forms.Textarea(attrs={'class': 'form-control'}),
             'date_limite': forms.DateInput(attrs={'id': 'datetimepicker1','class': 'form-control'}),
             # 'date_publication': forms.DateInput(attrs={'id': 'datetimepicker2','class': 'form-control'}),
-            'mot_cle': forms.Select(attrs={'class': 'form-control'}),
+            'mot_cle': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
         
         fields = ('intutile', 'description','mission','date_limite','mot_cle')
-
-     
-     
-     
-     
-     
-     

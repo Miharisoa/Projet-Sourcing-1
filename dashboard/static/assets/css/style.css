@@ -1081,7 +1081,7 @@ PANELS CONFIGURATIONS
 .white-panel {
 	text-align: center;
 	background: #ffffff;
-	color: #ccd1d9;
+	/* color: #ccd1d9; */
 }
 
 .white-panel p {
@@ -2265,3 +2265,15 @@ label {
 .list-group-item{
     border:none;
 }
+
+.bleu{
+    background: rgb(0, 174, 255);
+    color:white;
+}
+
+.vert{
+    background: limegreen;
+    color:white;
+}
+
+/* modification 05 mai 2019 */

@@ -4,9 +4,10 @@
 
 {% block css %}
 {% load static %}
-<link href="{% static 'assets/css/recruteur.css' %}" rel="stylesheet">
+
 <link href="{% static 'assets/css/bootstrap-datetimepicker.css' %}" rel="stylesheet">
 <script src="{% static 'assets/script/bootstrap-datetimepicker.js' %}"></script>
+<link href="{% static 'assets/css/recruteur.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block sidebar %}
@@ -73,7 +74,16 @@
     <div class="row">
         <div class="col-lg-9 main-chart">
             <!-- <div class="row mtbox"> -->
-                <form method="POST" class="offre-form">
+                {% if message == "ok" %}
+                <div class="alert alert-success">
+                   Annonce enregistré
+                </div>
+                {% elif message == "non" %}
+                <div class="alert alert-danger">
+                   Il y a une erreur
+                </div>
+                {% endif%}
+                <form method="POST" id="offreform" action="/dashboard/recruteur/">
                     {% csrf_token %}
                     {{ form.as_p}}
                     <button type="submit" class="btn btn-sm btn-save pull-right">Enregistrer</button>
@@ -94,7 +104,7 @@
             <!-- First Member -->
             <div class="desc">
                 <div class="thumb">
-                    <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
+                    <img class="img-circle" src="assets/img/fr-01.jpg" width="35px" height="35px" align="">
                 </div>
                 <div class="details">
                     <p><a href="#">DIVYA MANIAN</a><br/>

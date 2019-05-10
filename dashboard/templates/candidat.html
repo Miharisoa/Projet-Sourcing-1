@@ -1,13 +1,17 @@
 {% extends "blank.html" %}
 
+<title>Sourcing | {% block title %}Candidat{% endblock %}</title>
 
-{% block title %}Candidat{% endblock %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/candidat.css' %}">
+
 
 {% block sidebar %}
 
 
     <li class="mt">
-        <a href="#">
+        <a href="#" onclick="changer_menu(1);">
             <i class="fa fa-home"></i>
             <span>Accueil</span>
         </a>
@@ -57,38 +61,87 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+    <div class="row" ng-controller="candidatCtrl" ng-init="init('{{liste|escapejs}}');">
         <div class="col-lg-9 main-chart">
-            <div class="row mtbox">
-                {% for offre in offres %}
-                <div class="col-md-4 col-sm-4 mb">
+            <div  ng-show="showListe==1 && page==1">                
+            <h3>Les offres correspondants</h3>
+            <div class="row mtbox">                
+                <div class="col-md-4 col-sm-4 mb" ng-repeat="element in offres">
+                    <!-- [[offres]] -->
+                    
                     <div class="white-panel pn donut-chart card">
-                        <div class="white-header">
-                            <h5>{{offre.intutile|upper}}</h5>
+                        <div class="white-header">                                               
+                            <h5>[[element.offre.intutile|uppercase]]</h5>                            
                         </div>
                         <div class="row">
                             <div class="col-sm-12 col-xs-12 goleft">
                                 <p>
-                                    <h5><i class="fa fa-list-alt"></i> Description</h5>
-                                    {{offre.description|truncatechars:100}}
+                                    <h5><i class="fa fa-list-alt"></i> Description</h5>                                    
+                                    [[element.offre.description|limitTo:100]]
                                 </p>
                             </div>
                             <div class="col-sm-12 col-xs-12 goleft">
                                 <p>
-                                    <h5><i class="fa fa-th-list"></i> Mission</h5>
-                                    {{offre.description|truncatechars:100}}
+                                    <h5><i class="fa fa-th-list"></i> Mission</h5>                                    
+                                    [[element.offre.mission|limitTo:100]]
                                 </p>
                             </div>
-                            <a href="#" class="pull-right">
+                            <a href="#" class="pull-right" ng-click="voirPlus($index);">
                                 <i class="fa fa-plus-square-o"></i>
-                                Voir plus</a>                                
+                                Voir plus
+                            </a>                                
                         </div>
                         <!-- <br> -->
                     </div>
-                </div>
-                {% endfor %}                
+                </div>                
 
             </div><!-- /row -->
+            </div> <!-- FIN LISTING -->
+
+            <!-- debut DIV Voir plus -->
+            <div ng-show="showListe==0 && page==1">
+                <div class="col-md-12 col-sm-12 mb">
+                        <div class="white-panel pn donut-chart card">
+                                <div class="white-header">                                               
+                                    <h5>[[currentElem.offre.intutile|uppercase]]</h5>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="row">
+                                            <h4>[[currentElem.societe]]</h4>
+                                            <p class="centered"><a href="#"><img src="{% static 'assets/img/ui-sam.jpg' %}" class="img-circle" width="60"></a></p>
+                                        </div>
+                                        Publié le [[currentElem.offre.date_publication]]
+                                        <h4>Date LIMITE : [[currentElem.offre.date_limite]]</h4>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-12">
+                                    
+                                        <div class="col-sm-12 col-xs-12 goleft">
+                                            <p>
+                                                <h5><i class="fa fa-list-alt"></i> Description</h5>                                                
+                                                <p ng-repeat="elem in currentElem.tab1">[[elem]]</p>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-12 col-xs-12 goleft">
+                                            <p>
+                                                <h5><i class="fa fa-th-list"></i> Mission</h5>                                                
+                                                <p ng-repeat="mission in currentElem.tab2">[[mission]]</p>
+                                            </p>
+                                        </div>
+                                    </div> 
+                                    <!-- fin description et mission -->
+                                    
+                                </div>
+                                <div class="row">
+                                    <button class="btn vert" ng-click="changement(1);">Retour</button>
+                                    <button class="btn bleu">Postuler</button>
+                                    
+                                </div>
+                                <br>
+                            </div>
+                </div>
+            </div>
+            <!-- fin DIV Voir plus -->
 
         </div>
         <div class="col-lg-3 ds">
@@ -103,16 +156,32 @@
             <h3>DERNIERES ANNONCES</h3>
             <!-- First Member -->
             <div class="desc">
-                <div class="thumb">
+                <!--<div class="thumb">
                     <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
                 </div>
                 <div class="details">
                     <p><a href="#">DIVYA MANIAN</a><br/>
                         <muted>Available</muted>
                     </p>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
 
+{% endblock %}
+
+
+
+{% block js %}
+<script>    
+    function changer_menu(page){
+        var name = "candidatCtrl";
+        var controller = angular.element("[ng-controller='" + name + "']");
+        var scope = controller.scope();
+        scope.$apply(function(){
+            scope.showListe = 1;
+            scope.page=page;
+        });
+    }
+</script>
 {% endblock %}

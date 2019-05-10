@@ -52,3 +52,9 @@ class Postulation(models.Model):
     class Meta:
         ordering = ['date_postulation']
         unique_together = (('candidat','offre'),)
+
+class CandidatOffre(models.Model):
+    candidat = models.ForeignKey(Candidat, on_delete = models.CASCADE, verbose_name='Candidat concerné')
+    offre = models.ForeignKey(Offre, on_delete = models.CASCADE, verbose_name='Offre concerné')
+        
+
