@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from myapp.models import Candidat,Recruteur
 from .models import Categorie, Offre, CandidatOffre
 import json
-from datetime import datetime
+from datetime import datetime,date
 from django.db.models import Subquery,OuterRef
 
 from .forms import OffreForm
@@ -37,20 +37,30 @@ def get_dashboard_candidat(request):
     categories = get_categories()
     offres = get_offres_id(id)
     liste = []
-    for item in offres:
+    for item in offres:        
         item.offre.date_limite = item.offre.date_limite.strftime('%d/%m/%Y')
         item.offre.date_publication = item.offre.date_publication.strftime('%d/%m/%Y')
-        # f = json.dumps(item.offre, default=lambda o: o.__dict__)
         objet = {'offre':item.offre,'societe':item.societe}
-        # liste.append(item.offre)        
         liste.append(objet)
+
+    liste2 = []
+    liste_categories = get_offres_categories(categories)
+    for lst in liste_categories:
+        liste2.append(json.dumps(lst, default=lambda o: o.__dict__))
+    print("DATA LOADED")
+
+    liste3 = derniere_annonces()
+
     form = CandidatForm()
+
     context ={
         'categories' : categories,
         'offres':offres,
         'user':user,
         'form_profil':form,
         'liste':json.dumps(liste, default=lambda o: o.__dict__),
+        'offre_categories':json.dumps(liste2, default=lambda o: o.__dict__),
+        'dernieres_annonces':liste3,
     }
     return render(request,'candidat.html', context)
 
@@ -68,8 +78,8 @@ def get_offres():
 
 def get_offres_id(id_candidat):
     # offres_ = list(CandidatOffre.objects.select_related('offre').filter(candidat_id = id_candidat))
-    offres_= list(CandidatOffre.objects.select_related('offre').filter(candidat_id = id_candidat).annotate(
-        societe=Subquery(Recruteur.objects.filter(id=OuterRef('offre__recruteur_id')).values('nom_societe'))))
+    offres_= list(CandidatOffre.objects.select_related('offre').filter(candidat_id = id_candidat,offre__date_limite__gte=datetime.now()).annotate(
+        societe=Subquery(Recruteur.objects.filter(id=OuterRef('offre__recruteur_id')).values('nom_societe'))).order_by('-offre__date_limite'))
     # offres_ = [{
     #     'intutile':o.offre.intutile,
     #     'description':o.offre.description,
@@ -82,6 +92,33 @@ def get_offres_id(id_candidat):
     # }
     # for o in list(offres_query)]
     return offres_
+
+def get_offres_par_categorie(id_categorie):
+    #date_limite__gte=datetime.now()
+    offres = list(Offre.objects.all().filter(categorie__id=id_categorie,date_limite__gte=datetime.now()).annotate(
+        societe=Subquery(Recruteur.objects.filter(id=OuterRef('recruteur_id')).values('nom_societe'))).order_by('-date_limite'))
+    return offres
+
+def get_offres_categories(categories):
+    liste = []
+    for cat in categories:
+        temp = formatter(get_offres_par_categorie(cat.id))
+        liste.append(temp)
+    return liste
+
+def formatter(offres):
+    liste = []
+    for item in offres:     
+        item.date_limite = item.date_limite.strftime('%d/%m/%Y')
+        item.date_publication = item.date_publication.strftime('%d/%m/%Y')       
+        objet = {'offre':item,'societe':item.societe}        
+        liste.append(objet)
+    return liste
+
+def derniere_annonces():
+    liste = list(Offre.objects.all().filter(date_limite__gte=datetime.now()).annotate(
+        societe=Subquery(Recruteur.objects.filter(id=OuterRef('recruteur_id')).values('nom_societe'))).order_by('-date_publication'))[:3]
+    return liste
 
 def tri_offres_id(id_candidat, mot_):
     offres_ = list(CandidatOffre.objects.select_related('offre').filter(candidat_id = id_candidat))

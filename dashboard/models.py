@@ -8,6 +8,11 @@ class MotCle(models.Model):
     def __str__(self):
         return self.mot
 
+class Categorie(models.Model):
+    denomination = models.CharField('Catégorie',max_length=50)
+    def __str__(self):
+        return self.denomination
+
 class Offre(models.Model):
     intutile = models.CharField('Intitulé du poste', max_length=100)
     description = models.TextField(null=True)
@@ -15,17 +20,13 @@ class Offre(models.Model):
     date_limite = models.DateTimeField('Date limite du candidature', default=timezone.now)
     date_publication = models.DateTimeField('Date de la publication', default=timezone.now)
     recruteur = models.ForeignKey(Recruteur, on_delete=models.CASCADE)
+    categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, default=1)
     mot_cle = models.ManyToManyField(MotCle, verbose_name='Mots clés offre')
     def __str__(self):
         return self.intutile + " " + self.description
     class Meta:
         ordering = ['date_publication']
         
-
-class Categorie(models.Model):
-    denomination = models.CharField('Catégorie',max_length=50)
-    def __str__(self):
-        return self.denomination
 
 class Specialite(models.Model):
     label = models.CharField('Spécialité', max_length=200)
