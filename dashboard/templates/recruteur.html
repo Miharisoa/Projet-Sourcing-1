@@ -83,11 +83,59 @@
                    Il y a une erreur
                 </div>
                 {% endif%}
-                <form method="POST" id="offreform" action="/dashboard/recruteur/">
-                    {% csrf_token %}
-                    {{ form.as_p}}
-                    <button type="submit" class="btn btn-sm btn-save pull-right">Enregistrer</button>
-                </form>
+
+                
+                <!-- debut listing offres -->
+                <div class="row">
+                    <div class="col-md-12">         
+                        <h3 id="titre">Mes Postes</h3>
+                        <div class="row mtbox">
+                            {% for p in poste %}                
+                            <div class="col-md-4 col-sm-4 mb"> <!-- ng-repeat="element in offres" -->
+                                <!-- [[offres]] -->
+                                
+                                <div class="white-panel pn donut-chart card">
+                                    <div class="white-header">                                               
+                                        <h5>{{p.date_limite}}</h5>                            
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12 goleft">
+                                            <h3>{{p.intutile}}</h3>
+                                            <p>
+                                                <h5><i class="fa fa-list-alt"></i> Description</h5>                                    
+                                                {{p.description}}
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-12 col-xs-12 goleft">
+                                            <p>
+                                                <h5><i class="fa fa-th-list"></i> Mission</h5>                                    
+                                                {{p.mission}}
+                                            </p>
+                                        </div>
+                                        <a href="#" class="pull-right" >                                        
+                                            <i class="fa fa-plus-square-o"></i>
+                                            Voir plus
+                                        </a>                                
+                                    </div>
+                                    <!-- <br> -->
+                                </div>
+                            </div>
+                            {% endfor %}                
+    
+                        </div><!-- /row mtbox-->
+                    </div>                            
+                </div>
+                <!-- FIN LISTING -->
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <form method="POST" id="offreform" action="/dashboard/recruteur/">
+                            {% csrf_token %}
+                            {{ form.as_p}}
+                            <button type="submit" class="btn btn-sm btn-save pull-right">Enregistrer</button>
+                        </form>
+                    </div>
+                </div>
+               
             <!-- </div> -->
 
         </div>
@@ -102,16 +150,18 @@
         
             <h3>DERNIERES ANNONCES</h3>
             <!-- First Member -->
+            {% for annonce in dernieres_annonces %}
             <div class="desc">
                 <div class="thumb">
-                    <img class="img-circle" src="assets/img/fr-01.jpg" width="35px" height="35px" align="">
+                    <img class="img-circle" src="{% static 'assets/img/ui-danro.jpg' %}" width="35px" height="35px" align="">
                 </div>
                 <div class="details">
-                    <p><a href="#">DIVYA MANIAN</a><br/>
-                        <muted>Available</muted>
+                    <p><a href="#">{{annonce.intutile}}</a><br/>
+                        <muted>date limite: {{annonce.date_limite}}</muted>
                     </p>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 

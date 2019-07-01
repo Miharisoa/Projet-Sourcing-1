@@ -19,6 +19,9 @@ def get_dashboard_recruteur(request):
     user = get_object_or_404(Recruteur,id=id)
     print(user.nom)
     message = ""
+    poste = get_offres_recruteurs(id)
+    categories = get_categories()
+    liste3 = derniere_annonces()
     if request.method == "POST":
         form = OffreForm(request.POST)
         print ("aiza oooooo")
@@ -33,7 +36,14 @@ def get_dashboard_recruteur(request):
             print("tsy sauve")
     else:
         form = OffreForm()
-    return render(request,'recruteur.html',{'form': form,'message':message})
+    context = {
+        'form': form,
+        'message':message,
+        'poste':poste,
+        'categories':categories,
+        'dernieres_annonces':liste3,
+    }
+    return render(request,'recruteur.html',context)
 
 
 def get_dashboard_candidat(request):
@@ -228,7 +238,10 @@ def get_flux_offres():
     objet = {'categories':liste2,'valeurs':liste}
     return objet
 
-
+#get offre recruteur
+def get_offres_recruteurs(id_recruteur):  #recruteur__id = request.session[id_user]
+    offres_r = list(Offre.objects.all().filter(recruteur__id=id_recruteur).order_by('date_publication'))
+    return offres_r
 
 def tri_offres_id(id_candidat, mot_):
     offres_ = list(CandidatOffre.objects.select_related('offre').filter(candidat_id = id_candidat))
