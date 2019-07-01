@@ -29,6 +29,7 @@ DEBUG = True
 CSRF_COOKIE_SECURE = False
 
 ALLOWED_HOSTS = []
+UPLOAD_URL = "http://127.0.0.1:9000/"
 
 
 # Application definition
@@ -122,13 +123,15 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # STATICFILES_DIR = ''
 

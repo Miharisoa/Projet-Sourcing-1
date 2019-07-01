@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
 from myapp.models import Candidat, Recruteur
 
 class MotCle(models.Model):
@@ -49,7 +50,7 @@ class Postulation(models.Model):
     candidat = models.ForeignKey(Candidat, on_delete = models.CASCADE, verbose_name='Candidat concerné')
     offre = models.ForeignKey(Offre, on_delete = models.CASCADE, verbose_name='Offre concerné')
     def __str__(self):
-        return self.candicat + ' ' + self.offre
+        return self.candidat + ' ' + self.offre
     class Meta:
         ordering = ['date_postulation']
         unique_together = (('candidat','offre'),)

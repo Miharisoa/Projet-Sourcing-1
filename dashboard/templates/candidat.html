@@ -35,7 +35,7 @@
     </li>
 
     <li class="sub-menu">
-        <a href="javascript:;" >
+        <a href="#" onclick="changer_menu(4);">
             <i class="fa fa-exchange"></i>
             <span>Postulation</span>
         </a>
@@ -59,8 +59,10 @@
 {% block content %}
     <div class="row" ng-controller="candidatCtrl" ng-init="init('{{liste|escapejs}}','{{offre_categories|escapejs}}');">
         <div class="col-lg-9 main-chart">
-            <div  ng-show="showListe==1 && page==1">  <!-- debut listing offres -->       
+            <!-- debut listing offres -->
+            <div  ng-show="showListe==1 && page==1">         
                 <h3 id="titre">Les offres correspondants</h3>
+               
                 <div class="row mtbox">                
                     <div class="col-md-4 col-sm-4 mb" ng-repeat="element in offres">
                         <!-- [[offres]] -->
@@ -93,7 +95,8 @@
                     </div>                
 
                 </div><!-- /row mtbox-->
-            </div> <!-- FIN LISTING -->
+            </div>
+             <!-- FIN LISTING -->
 
             <!-- debut DIV Voir plus -->
             <div ng-show="showListe==0 && page==1">
@@ -130,22 +133,19 @@
                             
                         </div>
                         <div class="row">
-                            <button class="btn vert" ng-click="changement(1);">Retour</button>
-                            <!-- <button class="btn bleu">Postuler</button> -->
+                            <button class="btn vert" ng-click="changement(1);">Retour</button>                            
                             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                 Postuler
                             </button>
                             <div class="collapse" id="collapseExample">
                                 <div class="col-md-4 col-md-offset-4">
-                                    <!-- <div class="well"> -->
-                                        <div class="upload-btn-wrapper">
-                                            <br>
-                                            <form action="#">                                
-                                                <button class="btn-file">Uploader une lettre de motivation</button>
-                                                <input type="file" name="myfile" />
-                                            </form>
-                                        </div>
-                                    <!-- </div> -->
+                                    
+                                    <div class="upload-btn-wrapper">
+                                        <br>                                        
+                                        <input type="file" name="lettre" onchange="angular.element(this).scope().fileNameChanged(this.files[0],'lm')"/>
+                                        <button class="btn-file">Uploader une lettre de motivation</button>                                            
+                                    </div>
+                                    
                                 </div>
                             </div>                        
                         </div>
@@ -164,6 +164,7 @@
                         
                         <div class="col-md-6">
                             <br>
+                            <button class="flash-btn bg-linear btn-sm" data-toggle="collapse" data-target="#collapseEmail" aria-expanded="false" aria-controls="collapseEmail">Modifier</button>                            
                             <h1>{{user.nom|title}} {{user.prenom|title}}</h1>
                             <p>Commercial & Communication</p>
                             <p>                                    
@@ -171,7 +172,14 @@
                                     <i class="fa fa-envelope-o"></i>        
                                     {{user.mail}}                                
                                 </a>
-                            </p>                        
+                            </p>
+                            <div class="collapse col-md-6 col-md-offset-3" id="collapseEmail">
+                                <form action="/dashboard/email/" method="post">{% csrf_token %}
+                                    <input type="email" name="modif_email" id="modif_email" class="form-control">
+                                    
+                                    <button class="btn btn-sm btn-default" type="submit" style="margin-top:4px;">Envoyer</button>
+                                </form>
+                            </div>                    
                         </div>
                         <div class="col-md-6">
                             <p class=""><a href="#"><img src="{% static 'assets/img/ny.jpg' %}" class="img-circle" width="150"></a></p>
@@ -186,9 +194,21 @@
                         </div>
                         <div class="col-md-6">
                             <h1>A propos de moi</h1>
-                            Je suis né(e) le <b>{{user.ddn}}</b> <br><br>                            
-                            <!-- <b>{{user.adresse}}</b> <br><br>   -->
-                            <button class="btn btn-primary btn-sm">Ajouter une adresse</button>
+                            Je suis né(e) le <b>{{user.ddn}}</b> <br>                                                        
+                            {% if user.adresse == "" %}
+                                <b>Pas d'adresse</b>
+                            {% else %}
+                            <b>{{user.adresse}}</b>
+                            {% endif %}<br><br>
+                            <button class="flash-btn bg-linear btn-sm" data-toggle="collapse" data-target="#collapseAdresse" aria-expanded="false" aria-controls="collapseAdresse">Ajouter une adresse</button>
+                            
+                            <div class="collapse col-md-6 col-md-offset-3" id="collapseAdresse" style="margin-top:5px;">
+                                <form action="/dashboard/adress/" method="post">{% csrf_token %}
+                                    <input type="text" name="modif_adresse" id="modif_adresse" class="form-control">
+                                    
+                                    <button class="btn btn-sm btn-default" type="submit" style="margin-top:4px;">Envoyer</button>
+                                </form>
+                            </div>   
                         </div>                       
                     </div>
                     <br>
@@ -197,9 +217,9 @@
                         
                         <div class="col-md-6 col-md-offset-3">
                             <h1>Renouveller mon profil</h1>
-                            <form action="#" method="POST">
+                            <form action="/dashboard/change_profil/" method="POST">{% csrf_token %}
                                 {{form_profil.as_p}}
-                                <button class="btn btn-primary">Valider</button>
+                                <button type="submit" class="flash-btn bg-linear btn">Valider</button>
                             </form>
                         </div>  
                        
@@ -216,7 +236,7 @@
                             <br>
                             <form action="#">                                
                                 <button class="btn-file">Téléverser un CV</button>
-                                <input type="file" name="myfile" />
+                                <input type="file" name="myfile" onchange="angular.element(this).scope().fileNameChanged(this.files[0],'cv')"/>
                             </form>
                         </div>
                     </div>
@@ -286,6 +306,48 @@
             </div>
             
             <!-- FIN PARTIE CV -->
+
+            <!-- DEBUT POSTULATION -->
+            <div ng-show="page==4">
+                <div class="col-md-12 col-sm-12 mb white-panel card" id="partiePostulation">
+                    <h1>Mes postulations</h1>
+                    <div class="row mtbox">                
+                        {% for element in postulations %}
+                            <div class="col-md-4 col-sm-4 mb">
+                                <!-- [[offres]] -->
+                                
+                                <div class="white-panel pn donut-chart card">
+                                    <div class="white-header">                                               
+                                        <h5>{{element.offre.intutile}}</h5>                            
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12 goleft">
+                                            <h3>{{element.offre.date_limite}}</h3>
+                                            <p>
+                                                <h5><i class="fa fa-list-alt"></i> Description</h5>                                    
+                                                {{element.offre.description|truncatechars:100}}
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-12 col-xs-12 goleft">
+                                            <p>
+                                                <h5><i class="fa fa-th-list"></i> Mission</h5>                                    
+                                                {{element.offre.mission|truncatechars:100}}
+                                            </p>
+                                        </div>
+                                        <a href="#" class="pull-right">
+                                            <i class="fa fa-minus-square-o"></i>
+                                            Annuler
+                                        </a> 
+                                    </div>
+                                    <!-- <br> -->
+                                </div>
+                            </div>  
+                            {% endfor %}              
+        
+                        </div><!-- /row mtbox-->
+                </div>
+            </div>
+            <!-- FIN POSTULATION -->
 
             <!-- DEBUT STATISTIQUE -->
             <div ng-show="page==6">
@@ -375,23 +437,36 @@
 
 <script src="{% static 'js/chart.js' %}"></script>
 <script>
+
+
+function get_data(liste){
+    var data = [];
+    var tab = liste.substring(1,liste.length-1).split(',');
+    tab.forEach(function(value,i){        
+        // alert(value);
+        data.push(value);
+    });
+    return data;
+}
+
 var ctx = document.getElementById('myChart');
 var ctx2 = document.getElementById('myChart2');
 
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels:get_data('{{flux_categories|escapejs}}'),
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: "Flux d'offres",
+            data : get_data('{{flux_valeurs|escapejs}}'),
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 206, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(153, 102, 255)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 0, 64)',
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -399,7 +474,8 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 0, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -414,22 +490,22 @@ var myChart = new Chart(ctx, {
         }
     }
 });
-
 
 var myChart2 = new Chart(ctx2, {
     type: 'doughnut',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels:get_data('{{flux_categories|escapejs}}'),
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: "Demandes",
+            data: [12, 19, 3, 5, 2, 3,10],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 206, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(153, 102, 255)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 0, 64)',
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -437,7 +513,8 @@ var myChart2 = new Chart(ctx2, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 0, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -452,6 +529,7 @@ var myChart2 = new Chart(ctx2, {
         }
     }
 });
+
 
 
 </script>

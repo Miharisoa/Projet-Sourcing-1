@@ -28,6 +28,7 @@ hr{
     padding-bottom: 30px;
 }
 
+/* Bouton UPLOAD FILE */
 
 .upload-btn-wrapper {
     position: relative;
@@ -52,4 +53,6 @@ hr{
     top: 0;
     opacity: 0;
   }
+
+  
   

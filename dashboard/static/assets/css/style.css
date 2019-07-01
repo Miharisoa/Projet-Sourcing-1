@@ -217,13 +217,14 @@ hr {
 ul.top-menu > li > .logout {
 	color: #f2f2f2;
 	font-size: 12px;
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border: 1px solid #64c3c2 !important;
+    border-radius: 20px !important;
+	-webkit-border-radius: 20px;
+	/* border: 1px solid #64c3c2 !important; */
 	padding: 5px 15px;
     margin-right: 15px;
     margin-left:25px;
-	background: #1F9CF4;
+    background: linear-gradient(rgb(243, 37, 116),blueviolet);
+    /* background: linear-gradient(teal,rgb(73, 224, 166)); */
 	margin-top: 15px;
 }
 
@@ -366,7 +367,8 @@ ul.sidebar-menu li a{
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #1F9CF4;
+    /* background: #1F9CF4; */
+    background: palevioletred;
     color: #fff;
     display: block;
 
@@ -783,7 +785,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 	line-height: 60px;
 	height: 60px;
 	margin: 0;
-	background: #ff865c;
+    /* background: #ff865c; */
+    /* linear-gradient(rgb(243, 37, 116),blueviolet); */
+    background:rgb(243, 37, 116);
 	text-align: center;
 }
 
@@ -827,7 +831,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .ds a {
-	color: #1F9CF4;
+	color: darkslategrey;
 }
 
 /* LINE ICONS CONFIGURATION */
@@ -2277,3 +2281,29 @@ label {
 }
 
 /* modification 05 mai 2019 */
+
+/* modif 30 juin */
+
+.bg-linear{
+    background: linear-gradient(rgb(243, 37, 116),blueviolet);
+    /* linear-gradient(rgb(0, 255, 200),rgb(0, 174, 255)); */
+}
+
+/* BOUTON FLASHY */
+.flash-btn{
+    /* padding: 5px 10px; */
+    color: #fff;
+    font-weight: bold;
+    border:none;
+    border-radius: 20px;
+    /* animation: flash;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite; */
+}
+
+@keyframes flash{
+    0%{opacity: 1.0;}
+    50%{opacity: 0.5;}
+    100%{opacity: 1;}
+}
